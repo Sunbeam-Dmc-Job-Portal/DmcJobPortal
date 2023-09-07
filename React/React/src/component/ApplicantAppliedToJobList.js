@@ -87,7 +87,7 @@ export default function ApplicantAppliedToJobList() {
                   
                   width:'500px',
                   float: 'left',
-                  height:'600px',
+                  height:'92vh',
                   position:'relative' }}>
             {/*List here*/}
             {list}
