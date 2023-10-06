@@ -34,17 +34,19 @@ export default function LoginRecruiter(props) {
                 axios.post(constants.serverUrl+"/recruiter/login",input).then((res)=>{
 
                 
-
+                   
                     if(res.data.status === "success")
                     {
-                        
+                        if(res.data.data[0].isApproved === 1){     
                             sessionStorage.setItem("isUserLoggedIn","true");
                             sessionStorage.setItem("loggedInUser","recruiter");
                             sessionStorage.setItem("company",res.data.data[0].company_name)
                             sessionStorage.setItem("recruiterId",res.data.data[0].recruiter_id)
                             props.setState(" ");
                             history.push("/recruiterhome")
-                        
+                        }else{
+                            toast.warning("Admin has not yet Verified your account please Wait for admin to approve you..!!")
+                        }
                         
 
                     }else{

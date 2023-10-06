@@ -25,7 +25,7 @@ export default function AdminLogin(props) {
         }
         else {
 
-                if (input.email === "admin" && input.password === "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") {
+                if (input.email === "admin" && input.password === "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") {
 
                     sessionStorage.setItem("isUserLoggedIn", "true");
                     sessionStorage.setItem("loggedInUser", "admin");

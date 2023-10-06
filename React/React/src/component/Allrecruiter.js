@@ -7,6 +7,7 @@ import phone from '../images/phone_iphone_FILL0_wght400_GRAD0_opsz24.svg'
 import work from '../images/work_white_24dp.svg'
 import email from '../images/mail_FILL0_wght400_GRAD0_opsz24.svg'
 import date from '../images/calendar_month_FILL0_wght400_GRAD0_opsz24.svg'
+import { toast } from "react-toastify";
 
 export default function Allrecruiter() {
   const [recruiter, setRecruiter] = useState([]);
@@ -40,6 +41,28 @@ export default function Allrecruiter() {
       });
   };
 
+
+  let approveRec = (val,id)=>{
+
+      if(val === 0){
+        
+        axios.put(constants.serverUrl + "/admin/approveuser/"+id).then((res)=>{
+
+            if(res.data.status === "success"){
+
+              toast.success("Recruiter Approved")
+              getRecruiter()
+            }
+        })
+      }else{
+
+        toast.error("Already Approved")
+      }
+
+
+
+  }
+
   return (
     <div>
       <center>
@@ -72,7 +95,7 @@ export default function Allrecruiter() {
                 justifyContent : 'space-between'
               }}
             >
-              <div style={{ marginLeft: 0, position: "relative" }}>
+              <div style={{ marginLeft: 0, position: "relative" ,marginRight : 'auto'}}>
                 <div style={{ display: "flex", marginLeft: 30 }}>
                   <h5 style={{ marginLeft: 0 }}>
                     {r.first_name} {r.last_name}
@@ -122,6 +145,18 @@ export default function Allrecruiter() {
                 onClick={()=>{deleteRecruiter(r.recruiter_id)}}
               >
                 Delete
+              </button>
+              <button
+                type="button"
+                className={r.isApproved === 1? "btn btn-outline-success": "btn btn-outline-info"}
+                style={{ height: "max-content", alignItems: "flex-end",marginLeft : 4 }}
+                onClick={()=>{
+
+                   approveRec(r.isApproved,r.recruiter_id)
+                }}  
+
+              >
+                  {r.isApproved === 1? "Approved" : "Not Approved"}
               </button>
             </div>
           );

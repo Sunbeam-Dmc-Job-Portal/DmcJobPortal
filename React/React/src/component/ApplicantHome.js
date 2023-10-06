@@ -12,6 +12,7 @@ import { constants } from '../utils/constant'
 import { toast } from 'react-toastify'
 
 
+
 export default function ApplicantHome()
 {
 
@@ -30,6 +31,7 @@ export default function ApplicantHome()
     let reload = ()=>{
 
       getAllJobs()
+      toast.success("Reload Successfull")
      
     }
 

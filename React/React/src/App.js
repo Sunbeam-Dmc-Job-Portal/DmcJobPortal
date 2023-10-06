@@ -1,7 +1,6 @@
 
 import './App.css';
 import Navbar from './component/Navbar';
-
 import Footer from './component/Footer';
 import LoginApplicant from './component/LoginApplicant';
 import Index from './component/Index';
@@ -17,7 +16,6 @@ import RecruiterProfile from './component/RecruiterProfile';
 import ShortlistCandidate from './component/ShortlistCandidate'
 import EditJob from './component/EditJob';
 import AddJob from './component/AddJob'
-import ApplicantApplied from './component/ApplicantApplied';
 import RecruiterRegister from './component/RecruiterRegister';
 import ApplicantProfile from './component/ApplicantProfile';
 import ApplicantHome from './component/ApplicantHome';
@@ -39,6 +37,7 @@ function App(props) {
       <Navbar setState={setState} />
         <div>
       <Switch>
+
         <Route exact path="/" component={Index} />
 
         <Route exact path="/applogin">
@@ -57,12 +56,14 @@ function App(props) {
 
         <ProtectedRoute path="/shortlisted"  component={ShortlistCandidate}/>
 
-        <Route exact path="/adminlogin"> <AdminLogin setState={setState}/></Route>
+        <Route exact path="/adminlogin">
+           <AdminLogin setState={setState}/>
+        </Route>
       
-
         <AdminRoute exact path="/adminhome" component={Admin}/>
 
         <AdminRoute path='/allrecruiter' component={Allrecruiter}/>
+
         <AdminRoute path='/allapplicant' component={AllApplicant}/>
 
         <ProtectedRoute path="/editjob" component={EditJob}/>
@@ -84,7 +85,7 @@ function App(props) {
         <Route path="/applicantregister" component={ApplicantRegister}/>
 
       </Switch>
-        <ToastContainer  autoClose={2000} theme="dark"/>
+        <ToastContainer  autoClose={1000} theme="dark"/>
       </div>
       <Footer />
     </>
