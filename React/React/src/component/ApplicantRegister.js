@@ -67,13 +67,13 @@ export default function ApplicantRegister() {
 
   return (
     <>    
-    <div  style={{display: 'flex', height: '100vh', backgroundImage : `url(${opportunity})`}}>
-    <div className="container" >
-      <div className="main-body">
-        <div className="row">      
-          <div className="d-flex flex-row justify-content-end p-1"  style={{ justifyContent: 'flex-end',marginTop: "20px" }} >
-            <div className="card" style={{maxWidth : 725}}>
-              <div className="card-body" style={{width : 700}}>
+    <div  style={{display: 'flex', height: '78vh', backgroundImage : `url(${opportunity})`,flexDirection : 'column'}}>
+    <div style={{maxWidth : 700,marginBottom : 100}} >
+      <div className="">
+        <div className="mx-3">      
+          <div   style={{ justifyContent: 'flex-end',marginTop: "20px" ,marginBottom : 80}} >
+            <div className="card">
+              <div className="card-body" style={{maxWidth : 700}} >
               <h5 className="d-flex align-items-center mb-3">Register Details</h5>
                 <div className="row mb-3">
                   <div className="col-sm-3">

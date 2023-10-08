@@ -8,7 +8,7 @@ export default function Footer() {
               <div className="container">
                   <div className="row">
                       <div className="col-md-6">
-                          <p className="copyright_text">Copyright 2020 All Right Reserved By.<a href="https://google.com">Google.com </a></p>
+                          <p className="copyright_text">Copyright 2020 All Right Reserved By.<a href="https://google.com">W1JB</a></p>
                       </div>
                       <div className="col-md-6">
                           <p className="cookies_text">Cookies, Privacy and Terms</p>

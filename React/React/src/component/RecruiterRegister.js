@@ -72,7 +72,7 @@ export default function RecruiterRegister()
         <div className="main-body">
           <div className="row">
             <div className="col-lg-8" style={{marginTop : 100}}>
-              <div className="card">
+              <div className="card" style={{marginBottom : 100}}>
                 <div className="card-body">
                   <h5 className="d-flex align-items-center mb-3">
                     Register Details
