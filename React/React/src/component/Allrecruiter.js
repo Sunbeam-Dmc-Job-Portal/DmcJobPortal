@@ -84,82 +84,171 @@ export default function Allrecruiter() {
       </center>
       <center>
         {recruiter.map((r) => {
-          return (
-            <div
-              className="shadow-lg p-3 mb-5 bg-body rounded"
-              style={{
-                maxWidth: 1000,
-                height: "inherit",
-                display: "flex",
-                borderRadius: 100,
-                justifyContent : 'space-between'
-              }}
-            >
-              <div style={{ marginLeft: 0, position: "relative" ,marginRight : 'auto'}}>
-                <div style={{ display: "flex", marginLeft: 30 }}>
-                  <h5 style={{ marginLeft: 0 }}>
-                    {r.first_name} {r.last_name}
-                  </h5>
+          if(searchText === ""){
+
+
+            return (
+              <div
+                className="shadow-lg p-3 mb-5 bg-body rounded"
+                style={{
+                  maxWidth: 1000,
+                  height: "inherit",
+                  display: "flex",
+                  borderRadius: 100,
+                  justifyContent : 'space-between',
+                  flexFlow : 'wrap'
+                }}
+              >
+                <div style={{ marginLeft: 0, position: "relative" ,marginRight : 'auto'}}>
+                  <div style={{ display: "flex", marginLeft: 30 }}>
+                    <h5 style={{ marginLeft: 0 }}>
+                      {r.first_name} {r.last_name}
+                    </h5>
+                  </div>
+  
+                  <ul>
+                    <li style={{ display: "flex" }}>
+                      <span>
+                        <img style={{ fill: "black" }} alt='img' src={work}></img>
+                      </span>
+                      <p>Comapany :</p>
+                      <p style={{ marginLeft: 0 }}>{r.company_name}</p>
+                    </li>
+  
+                    <li style={{ display: "flex" }}>
+                      <span>
+                        <img alt='img' src={email}></img>
+                      </span>
+                      <p>Email :</p>
+                      <p style={{ marginLeft: 0 }}>{r.email}</p>
+                    </li>
+  
+                    <li style={{ display: "flex" }}>
+                      <span>
+                        <img alt='img' src={phone}></img>
+                      </span>
+                      <p>Phone :</p>
+                      <p style={{ marginLeft: 0 }}>{r.contact_number}</p>
+                    </li>
+  
+                    <li style={{ display: "flex" }}>
+                      <span>
+                        <img alt='img' src={date}></img>
+                      </span>
+                      <p>Registration Date :</p>
+                      <p style={{ marginLeft: 0 }}>
+                        {trimDate(r.registration_date)}
+                      </p>
+                    </li>
+                  </ul>
                 </div>
-
-                <ul>
-                  <li style={{ display: "flex" }}>
-                    <span>
-                      <img style={{ fill: "black" }} alt='img' src={work}></img>
-                    </span>
-                    <p>Comapany :</p>
-                    <p style={{ marginLeft: 0 }}>{r.company_name}</p>
-                  </li>
-
-                  <li style={{ display: "flex" }}>
-                    <span>
-                      <img alt='img' src={email}></img>
-                    </span>
-                    <p>Email :</p>
-                    <p style={{ marginLeft: 0 }}>{r.email}</p>
-                  </li>
-
-                  <li style={{ display: "flex" }}>
-                    <span>
-                      <img alt='img' src={phone}></img>
-                    </span>
-                    <p>Phone :</p>
-                    <p style={{ marginLeft: 0 }}>{r.contact_number}</p>
-                  </li>
-
-                  <li style={{ display: "flex" }}>
-                    <span>
-                      <img alt='img' src={date}></img>
-                    </span>
-                    <p>Registration Date :</p>
-                    <p style={{ marginLeft: 0 }}>
-                      {trimDate(r.registration_date)}
-                    </p>
-                  </li>
-                </ul>
+                <button
+                  type="button"
+                  className="btn btn-outline-danger"
+                  style={{ height: "max-content", alignItems: "flex-end" }}
+                  onClick={()=>{deleteRecruiter(r.recruiter_id)}}
+                >
+                  Delete
+                </button>
+                <button
+                  type="button"
+                  className={r.isApproved === 1? "btn btn-outline-success": "btn btn-outline-info"}
+                  style={{ height: "max-content", alignItems: "flex-end",marginLeft : 4 }}
+                  onClick={()=>{
+  
+                     approveRec(r.isApproved,r.recruiter_id)
+                  }}  
+  
+                >
+                    {r.isApproved === 1? "Approved" : "Not Approved"}
+                </button>
               </div>
-              <button
-                type="button"
-                className="btn btn-outline-danger"
-                style={{ height: "max-content", alignItems: "flex-end" }}
-                onClick={()=>{deleteRecruiter(r.recruiter_id)}}
-              >
-                Delete
-              </button>
-              <button
-                type="button"
-                className={r.isApproved === 1? "btn btn-outline-success": "btn btn-outline-info"}
-                style={{ height: "max-content", alignItems: "flex-end",marginLeft : 4 }}
-                onClick={()=>{
+            );
 
-                   approveRec(r.isApproved,r.recruiter_id)
-                }}  
 
+            
+          }else if(r.company_name.toLowerCase().includes(searchText.toLowerCase())){
+
+            return (
+              <div
+                className="shadow-lg p-3 mb-5 bg-body rounded"
+                style={{
+                  maxWidth: 1000,
+                  height: "inherit",
+                  display: "flex",
+                  borderRadius: 100,
+                  justifyContent : 'space-between',
+                  flexFlow : 'wrap'
+                }}
               >
-                  {r.isApproved === 1? "Approved" : "Not Approved"}
-              </button>
-            </div>
-          );
+                <div style={{ marginLeft: 0, position: "relative" ,marginRight : 'auto'}}>
+                  <div style={{ display: "flex", marginLeft: 30 }}>
+                    <h5 style={{ marginLeft: 0 }}>
+                      {r.first_name} {r.last_name}
+                    </h5>
+                  </div>
+  
+                  <ul>
+                    <li style={{ display: "flex" }}>
+                      <span>
+                        <img style={{ fill: "black" }} alt='img' src={work}></img>
+                      </span>
+                      <p>Comapany :</p>
+                      <p style={{ marginLeft: 0 }}>{r.company_name}</p>
+                    </li>
+  
+                    <li style={{ display: "flex" }}>
+                      <span>
+                        <img alt='img' src={email}></img>
+                      </span>
+                      <p>Email :</p>
+                      <p style={{ marginLeft: 0 }}>{r.email}</p>
+                    </li>
+  
+                    <li style={{ display: "flex" }}>
+                      <span>
+                        <img alt='img' src={phone}></img>
+                      </span>
+                      <p>Phone :</p>
+                      <p style={{ marginLeft: 0 }}>{r.contact_number}</p>
+                    </li>
+  
+                    <li style={{ display: "flex" }}>
+                      <span>
+                        <img alt='img' src={date}></img>
+                      </span>
+                      <p>Registration Date :</p>
+                      <p style={{ marginLeft: 0 }}>
+                        {trimDate(r.registration_date)}
+                      </p>
+                    </li>
+                  </ul>
+                </div>
+                <button
+                  type="button"
+                  className="btn btn-outline-danger"
+                  style={{ height: "max-content", alignItems: "flex-end" }}
+                  onClick={()=>{deleteRecruiter(r.recruiter_id)}}
+                >
+                  Delete
+                </button>
+                <button
+                  type="button"
+                  className={r.isApproved === 1? "btn btn-outline-success": "btn btn-outline-info"}
+                  style={{ height: "max-content", alignItems: "flex-end",marginLeft : 4 }}
+                  onClick={()=>{
+  
+                     approveRec(r.isApproved,r.recruiter_id)
+                  }}  
+  
+                >
+                    {r.isApproved === 1? "Approved" : "Not Approved"}
+                </button>
+              </div>
+            );
+
+          }
+     
         })}
       </center>
     </div>

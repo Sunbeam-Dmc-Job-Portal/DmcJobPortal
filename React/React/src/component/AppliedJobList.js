@@ -87,27 +87,20 @@ return (
                 </li>
               </ul>
 
-              <div style={{ marginLeft: 30, float: "left" }}>
-                <h6 style={{ float: "left" }}>JOB DESCRIPTION</h6>
+              <div style={{ marginLeft: 30, float: "left",display : 'flex',flexDirection : 'column' }}>
+                <h6 style={{ float: "left" ,display : 'flex'}}>JOB DESCRIPTION</h6>
 
-                <p style={{ float: "left", textAlign: "initial",overflow : "none" ,maxWidth: 700,overflowWrap : 'anywhere'}}>
+                <p style={{ float: "left", textAlign: "initial",overflow : "auto" ,maxWidth: "100%",overflowWrap : 'anywhere',height : 200}}>
                   {job.job_description}
                 </p>
-              </div>
-              <div
-                style={{ position: "relative", float: "right", right: -100 }}
+                <div
+                style={{ position: "relative",display : 'flex',justifyContent : 'flex-end'}}
               >
                 <label> {trimDate(job.created_date)}</label>
               </div>
+              </div>
+          
             </div>
-
-            <button
-              type="button"
-              className="btn btn-success"
-              style={{ height: "max-content" }}
-            >
-              Already Applied
-            </button>
           </div>
         </center>
       );

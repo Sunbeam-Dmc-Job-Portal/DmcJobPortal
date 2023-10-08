@@ -73,7 +73,7 @@ export default function ApplicantApplied(props) {
       )}
 
         <center>
-             <div className="shadow p-3 mb-3 bg-body rounded" style={{maxWidth: 1000}}>APPLIED APPLICANT TO YOUR JOB POSTED</div>
+             <div className="shadow p-3 mb-3 bg-body rounded" style={{maxWidth: 1000,fontWeight : 'bolder'}}>{props.jobName.toUpperCase()}</div>
         </center>
       <center>
         <div

@@ -35,7 +35,7 @@ function App(props) {
   return (
     <>
       <Navbar setState={setState} />
-        <div>
+        <div style={{marginBottom : 120}}>
       <Switch>
 
         <Route exact path="/" component={Index} />

@@ -141,7 +141,7 @@ export default function InActiveList() {
                   <h6 style={{ float: "left" }}>JOB DESCRIPTION</h6>
 
                   <p
-                  style={{ float: "left", textAlign: "initial",overflow : "none" ,maxWidth: 700,overflowWrap : 'anywhere'}}
+                  style={{ float: "left", textAlign: "initial",overflow : "auto" ,maxWidth: 700,overflowWrap : 'anywhere',height : 200}}
                   >
                     {job.job_description}
                   </p>
@@ -238,7 +238,7 @@ export default function InActiveList() {
                           <h6 style={{ float: "left" }}>JOB DESCRIPTION</h6>
 
                           <p
-                            style={{ float: "left", textAlign: "initial",overflow : "none" ,maxWidth: 700,overflowWrap : 'anywhere'}}
+                            style={{ float: "left", textAlign: "initial",overflow : "auto" ,maxWidth: 700,overflowWrap : 'anywhere',height : 200}}
                           >
                             {job.job_description}
                           </p>

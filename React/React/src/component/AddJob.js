@@ -91,11 +91,12 @@ export default function AddJob() {
     }
   };
   return (
+    <div style={{display : 'flex',justifyContent : 'center'}}>
     <div
       className="card text-center"
-      style={{ marginLeft: 400, marginRight: 400 ,marginTop:40}}
+      style={{ maxWidth : 800,marginTop:40}}
     >
- 
+      
       <div className="card-header">Add Job </div>
 
       <div style={{paddingLeft:20,paddingRight:20,paddingTop:20,marginBottom:0}}>
@@ -200,6 +201,7 @@ export default function AddJob() {
           cancel
         </button>
       </div>
+    </div>
     </div>
   );
 }

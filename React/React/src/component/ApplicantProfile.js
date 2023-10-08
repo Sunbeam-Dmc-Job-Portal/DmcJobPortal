@@ -198,7 +198,7 @@ export default function ApplicantProfile() {
 
   return (
     <>
-          <div style={{marginBottom : 55}}>
+          <div style={{marginBottom : 78}}>
             <div className="container">
               <div className="main-body">
                 <div className="row">

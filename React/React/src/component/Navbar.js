@@ -208,7 +208,7 @@ export default function Navbar(props) {
         {sessionStorage.getItem("isUserLoggedIn") ? (
           <></>
         ) : (
-          <li className="nav-item dropdown mx-20" style={{ marginRight: 100 ,marginLeft : 395}}>
+          <li className="nav-item dropdown mx-20" style={{ marginRight: 100}}>
             <span
               className="nav-link dropdown-toggle"
               id="navbarDropdown"

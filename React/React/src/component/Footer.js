@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <>
 
-          <div className="copyright_section" style={{position : "fixed", bottom : 0,width : '100%',float : 'left'}} >
+          <div className="copyright_section" style={{position : "fixed", bottom : 0,float : 'left'}} >
               <div className="container">
                   <div className="row">
                       <div className="col-md-6">
