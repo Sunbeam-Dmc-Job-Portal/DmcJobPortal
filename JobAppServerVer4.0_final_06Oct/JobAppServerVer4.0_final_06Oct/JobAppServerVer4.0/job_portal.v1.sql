@@ -53,7 +53,7 @@ create table recruiter_account
     contact_number varchar(255),
     company_name varchar(255) unique,
     registration_date DATETIME,
-    extra_col1 varchar(255),
+    isApproved TINYINT default 0,
     extra_col2 varchar(255),
     primary key (recruiter_id)
 );
