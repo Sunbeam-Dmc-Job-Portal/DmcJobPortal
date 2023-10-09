@@ -11,10 +11,11 @@ import skills from "../images/skill.svg";
 import { useHistory } from "react-router-dom";
 import { constants } from '../utils/constant';
 import { toast } from "react-toastify";
+import LoadingScreen from "./LoadingScreen";
 
 export default function ApplicantApplied(props) {
   const [applies, setApplies] = useState([]);
-  const [message, setMessage] = useState("");
+  const [loading,setLoading] = useState(false)
   const history = useHistory();
   var [searchText, setSearchText] = useState("");
 
@@ -44,14 +45,21 @@ export default function ApplicantApplied(props) {
   };
 
   let shortList = (id,e) => {
-    setMessage("Please Wait Sending Mail to Shortlisted Candidate")
+    
+    setLoading(true)
     axios
       .post(constants.serverUrl+"/recruiter/shortlist", { job_applied_id: id ,email : e})
       .then((res) => {
+        
         if (res.data.status === "success") {
-          setMessage('')
+         
+          setLoading(false)
           toast.success("SHORTLISTED SUCCESSFULLY..!!!",{onClose : ()=>{history.push("/recruiterhome")}});
    
+        }else if( res.data.status === "error"){
+          setLoading(false)
+          getApplies()
+          toast.success("SHORTLISTED SUCCESSFULLY..!!!",{onClose : ()=>{history.push("/recruiterhome")}});
         }
       });
   };
@@ -62,19 +70,26 @@ export default function ApplicantApplied(props) {
   };
 
 
-  return (
-    < >
-      {message === "" ? (
-        <></>
-      ) : (
-        <div className="alert alert-warning" role="alert">
-          {message}
-        </div>
-      )}
 
-        <center>
-             <div className="shadow p-3 mb-3 bg-body rounded" style={{maxWidth: 1000,fontWeight : 'bolder'}}>{props.jobName.toUpperCase()}</div>
-        </center>
+  if(loading){
+
+    return(
+        <LoadingScreen />
+    )
+  }
+
+  return (
+    <>
+
+
+      <center>
+        <div
+          className="shadow p-3 mb-3 bg-body rounded"
+          style={{ maxWidth: 1000, fontWeight: "bolder" }}
+        >
+          {props.jobName.toUpperCase()}
+        </div>
+      </center>
       <center>
         <div
           className="shadow p-3 mb-2 mt-2 bg-body rounded"
@@ -92,16 +107,18 @@ export default function ApplicantApplied(props) {
           </div>
         </div>
       </center>
-      {
-        applies.length === 0? <center> <h2>Empty list</h2> </center>:
-          
-      applies.map((applicant) => {
-        if (searchText === "") {
-          return (
-            <div style={{marginBottom : 50}}>
-             
+      {applies.length === 0 ? (
+        <center>
+          {" "}
+          <h2>Empty list</h2>{" "}
+        </center>
+      ) : (
+        applies.map((applicant) => {
+          if (searchText === "") {
+            return (
+              <div style={{ marginBottom: 50 }}>
                 <div className="container">
-                  <div className="row" style={{justifyContent : 'center'}}>
+                  <div className="row" style={{ justifyContent: "center" }}>
                     <div className="col-lg-10">
                       <div className="candidate-list">
                         <div className="candidate-list-box card mt-4">
@@ -146,35 +163,36 @@ export default function ApplicantApplied(props) {
 
                                   <ul className="list-inline mb-0 text-muted">
                                     <li className="list-inline-item">
-                                      <img src={gender} alt='img'></img>
+                                      <img src={gender} alt="img"></img>
                                       {applicant.gender}
                                     </li>
                                     <li className="list-inline-item">
-                                      <img src={mail} alt='img'></img>
+                                      <img src={mail} alt="img"></img>
                                       {applicant.email}
                                     </li>
                                     <li className="list-inline-item">
-                                      <img src={phone} alt='img'></img>
+                                      <img src={phone} alt="img"></img>
                                       {applicant.contact_number}
                                     </li>
                                   </ul>
 
                                   <ul className="list-inline mb-0 text-muted">
                                     <li className="list-inline-item">
-                                      <img src={calender} alt='img'></img>Gradution start
-                                      date: {trimDate(applicant.start_date)}
+                                      <img src={calender} alt="img"></img>
+                                      Gradution start date:{" "}
+                                      {trimDate(applicant.start_date)}
                                     </li>
                                     <li className="list-inline-item">
-                                      <img src={calender} alt='img'></img>Gradution end
-                                      date:{" "}
+                                      <img src={calender} alt="img"></img>
+                                      Gradution end date:{" "}
                                       {trimDate(applicant.completion_date)}
                                     </li>
                                     <li className="list-inline-item">
-                                      <img src={percent} alt='img'></img>
+                                      <img src={percent} alt="img"></img>
                                       {applicant.percentage}
                                     </li>
                                     <li className="list-inline-item">
-                                      <img src={skills} alt='img'></img>
+                                      <img src={skills} alt="img"></img>
                                       {applicant.skill_set}
                                     </li>
                                   </ul>
@@ -184,130 +202,7 @@ export default function ApplicantApplied(props) {
                                 className="col-lg-5"
                                 style={{
                                   display: "flex",
-                                  marginLeft  : -12,
-                                  justifyContent: "flex-start"
-                                }}
-                              >
-                                <span>
-                                  <div className="form-check form-switch">
-                                    <button
-                                      type="button"
-                                      className="btn btn-outline-info"
-                                      onClick={() => {
-                                        shortList(applicant.job_applied_id,applicant.email);
-                                      }}
-                                    >
-                                      Shortlist
-                                    </button>
-                                  </div>
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-            </div>
-          );
-        } else if (
-          applicant.skill_set
-            .toLowerCase()
-            .includes(searchText.toLowerCase()) ||
-          applicant.degree_name
-            .toLowerCase()
-            .includes(searchText.toLowerCase()) ||
-          applicant.percentage <= searchText
-        ) {
-          return (
-            <div style={{marginBottom : 50}}>
-              <section className="section">
-                <div className="container">
-                  <div className="row" style={{justifyContent : 'center'}}>
-                    <div className="col-lg-10">
-                      <div className="candidate-list">
-                        <div className="candidate-list-box card mt-4">
-                          <div className="p-4 card-body ">
-                            <div className="align-items-center row">
-                              <div
-                                className="col-auto"
-                                width={500}
-                                height={500}
-                              >
-                                <div
-                                  className="candidate-list-images"
-                                  style={{ width: 150, height: 150 }}
-                                >
-                                  <span>
-                                    <img
-                                      src={getImage(applicant.profileImg)}
-                                      style={{ width: 150, height: 150 }}
-                                      alt="img"
-                                      className="avatar-md img-thumbnail rounded-circle"
-                                    />
-                                  </span>
-                                </div>
-                              </div>
-
-                              <div className="col-lg-5">
-                                <div className="candidate-list-content mt-3 mt-lg-0">
-                                  <h5 className="fs-19 mb-0">
-                                    <span className="primary-link" >
-                                      {applicant.first_name}{" "}
-                                      {applicant.last_name}
-                                    </span>
-                                    <span className="badge bg-success ms-1"></span>
-                                  </h5>
-
-                                  <p className="text-muted mb-2">
-                                    Degree: {applicant.degree_name}
-                                  </p>
-                                  <p className="text-muted mb-2">
-                                    University: {applicant.university_name}
-                                  </p>
-
-                                  <ul className="list-inline mb-0 text-muted">
-                                    <li className="list-inline-item">
-                                      <img src={gender} alt='img'></img>
-                                      {applicant.gender}
-                                    </li>
-                                    <li className="list-inline-item">
-                                      <img src={mail} alt='img'></img>
-                                      {applicant.email}
-                                    </li>
-                                    <li className="list-inline-item">
-                                      <img src={phone} alt='img'></img>
-                                      {applicant.contact_number}
-                                    </li>
-                                  </ul>
-
-                                  <ul className="list-inline mb-0 text-muted">
-                                    <li className="list-inline-item">
-                                      <img src={calender} alt='img'></img>Gradution start
-                                      date: {trimDate(applicant.start_date)}
-                                    </li>
-                                    <li className="list-inline-item">
-                                      <img src={calender} alt='img'></img>Gradution end
-                                      date:{" "}
-                                      {trimDate(applicant.completion_date)}
-                                    </li>
-                                    <li className="list-inline-item">
-                                      <img src={percent} alt='img'></img>
-                                      {applicant.percentage}
-                                    </li>
-                                    <li className="list-inline-item">
-                                      <img src={skills} alt='img'></img>
-                                      {applicant.skill_set}
-                                    </li>
-                                  </ul>
-                                </div>
-                              </div>
-                              <div
-                                className="col-lg-5"
-                                style={{
-                                  display: "flex",
-                                  marginLeft  : -12,
+                                  marginLeft: -12,
                                   justifyContent: "flex-start",
                                 }}
                               >
@@ -317,7 +212,10 @@ export default function ApplicantApplied(props) {
                                       type="button"
                                       className="btn btn-outline-info"
                                       onClick={() => {
-                                        shortList(applicant.job_applied_id);
+                                        shortList(
+                                          applicant.job_applied_id,
+                                          applicant.email
+                                        );
                                       }}
                                     >
                                       Shortlist
@@ -332,11 +230,138 @@ export default function ApplicantApplied(props) {
                     </div>
                   </div>
                 </div>
-              </section>
-            </div>
-          );
-        }else {return(<></>)}
-      })}
+              </div>
+            );
+          } else if (
+            applicant.skill_set
+              .toLowerCase()
+              .includes(searchText.toLowerCase()) ||
+            applicant.degree_name
+              .toLowerCase()
+              .includes(searchText.toLowerCase()) ||
+            applicant.percentage <= searchText
+          ) {
+            return (
+              <div style={{ marginBottom: 50 }}>
+                <section className="section">
+                  <div className="container">
+                    <div className="row" style={{ justifyContent: "center" }}>
+                      <div className="col-lg-10">
+                        <div className="candidate-list">
+                          <div className="candidate-list-box card mt-4">
+                            <div className="p-4 card-body ">
+                              <div className="align-items-center row">
+                                <div
+                                  className="col-auto"
+                                  width={500}
+                                  height={500}
+                                >
+                                  <div
+                                    className="candidate-list-images"
+                                    style={{ width: 150, height: 150 }}
+                                  >
+                                    <span>
+                                      <img
+                                        src={getImage(applicant.profileImg)}
+                                        style={{ width: 150, height: 150 }}
+                                        alt="img"
+                                        className="avatar-md img-thumbnail rounded-circle"
+                                      />
+                                    </span>
+                                  </div>
+                                </div>
+
+                                <div className="col-lg-5">
+                                  <div className="candidate-list-content mt-3 mt-lg-0">
+                                    <h5 className="fs-19 mb-0">
+                                      <span className="primary-link">
+                                        {applicant.first_name}{" "}
+                                        {applicant.last_name}
+                                      </span>
+                                      <span className="badge bg-success ms-1"></span>
+                                    </h5>
+
+                                    <p className="text-muted mb-2">
+                                      Degree: {applicant.degree_name}
+                                    </p>
+                                    <p className="text-muted mb-2">
+                                      University: {applicant.university_name}
+                                    </p>
+
+                                    <ul className="list-inline mb-0 text-muted">
+                                      <li className="list-inline-item">
+                                        <img src={gender} alt="img"></img>
+                                        {applicant.gender}
+                                      </li>
+                                      <li className="list-inline-item">
+                                        <img src={mail} alt="img"></img>
+                                        {applicant.email}
+                                      </li>
+                                      <li className="list-inline-item">
+                                        <img src={phone} alt="img"></img>
+                                        {applicant.contact_number}
+                                      </li>
+                                    </ul>
+
+                                    <ul className="list-inline mb-0 text-muted">
+                                      <li className="list-inline-item">
+                                        <img src={calender} alt="img"></img>
+                                        Gradution start date:{" "}
+                                        {trimDate(applicant.start_date)}
+                                      </li>
+                                      <li className="list-inline-item">
+                                        <img src={calender} alt="img"></img>
+                                        Gradution end date:{" "}
+                                        {trimDate(applicant.completion_date)}
+                                      </li>
+                                      <li className="list-inline-item">
+                                        <img src={percent} alt="img"></img>
+                                        {applicant.percentage}
+                                      </li>
+                                      <li className="list-inline-item">
+                                        <img src={skills} alt="img"></img>
+                                        {applicant.skill_set}
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                                <div
+                                  className="col-lg-5"
+                                  style={{
+                                    display: "flex",
+                                    marginLeft: -12,
+                                    justifyContent: "flex-start",
+                                  }}
+                                >
+                                  <span>
+                                    <div className="form-check form-switch">
+                                      <button
+                                        type="button"
+                                        className="btn btn-outline-info"
+                                        onClick={() => {
+                                          shortList(applicant.job_applied_id);
+                                        }}
+                                      >
+                                        Shortlist
+                                      </button>
+                                    </div>
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+            );
+          } else {
+            return <></>;
+          }
+        })
+      )}
     </>
   );
 }
